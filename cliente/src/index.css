@@ -1,0 +1,58 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --color-primary: 120 18 10;
+    --color-secondary: 45 13 10;
+    --color-accent: 190 50 40;
+    --color-background: 10 10 10;
+    --color-text: 245 245 245;
+  }
+
+  body {
+    margin: 0;
+    min-height: 100vh;
+    font-family: Inter, sans-serif;
+    color: rgb(var(--color-text));
+    background:
+      radial-gradient(circle at top right, rgba(128, 28, 16, 0.23), transparent 40%),
+      radial-gradient(circle at bottom left, rgba(80, 20, 15, 0.22), transparent 40%),
+      rgb(var(--color-background));
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply inline-flex items-center justify-center rounded-md bg-gradient-to-r from-red-900 to-red-600 px-4 py-2 text-sm font-semibold text-white transition hover:brightness-110;
+  }
+
+  .btn-secondary {
+    @apply inline-flex items-center justify-center rounded-md border border-white/15 bg-white/5 px-4 py-2 text-sm font-medium text-zinc-200 transition hover:bg-white/10;
+  }
+
+  .surface-card {
+    @apply rounded-2xl border border-white/10 bg-zinc-900/70 backdrop-blur-md;
+  }
+
+  .hero-card {
+    @apply rounded-3xl border border-red-500/20 bg-gradient-to-br from-black/70 via-zinc-900/90 to-red-950/30 shadow-[0_20px_70px_rgba(150,30,20,0.25)];
+  }
+
+  .section-title {
+    @apply text-3xl font-black tracking-tight md:text-5xl;
+  }
+
+  .section-copy {
+    @apply mt-3 max-w-3xl text-zinc-300;
+  }
+
+  .input-field {
+    @apply w-full rounded-md border border-white/10 bg-black/40 px-4 py-3 text-sm text-zinc-100 outline-none transition placeholder:text-zinc-500 focus:border-red-500/60 focus:ring-2 focus:ring-red-500/20;
+  }
+
+  .chip {
+    @apply rounded-full border border-red-500/30 bg-red-900/20 px-3 py-1 text-xs text-red-200;
+  }
+}
