@@ -14,9 +14,9 @@ function RegisterPage() {
   };
 
   return (
-    <section className="mx-auto max-w-md px-5 py-16">
+    <section className="mx-auto max-w-md px-4 py-10 sm:px-5 sm:py-14 lg:py-16">
       <h1 className="section-title">Crear cuenta</h1>
-      <form className="surface-card mt-8 space-y-4 p-6" onSubmit={handleSubmit}>
+      <form className="surface-card mt-8 space-y-4 p-5 sm:p-6" onSubmit={handleSubmit}>
         <input
           className="input-field"
           placeholder="Nombre y apellido"

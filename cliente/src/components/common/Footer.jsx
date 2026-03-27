@@ -3,7 +3,7 @@ import { socialLinks } from '../../data/siteContent';
 function Footer() {
   return (
     <footer className="border-t border-white/10 bg-black/70">
-      <div className="mx-auto flex max-w-6xl flex-col gap-6 px-5 py-10 md:flex-row md:items-center md:justify-between">
+      <div className="mx-auto flex max-w-6xl flex-col gap-6 px-4 py-8 sm:px-5 md:flex-row md:items-center md:justify-between md:py-10">
         <div>
           <p className="text-sm text-zinc-300">Prototype artist platform</p>
           <p className="text-xs text-zinc-500">Noche, tabaco, amistad y musica urbana.</p>

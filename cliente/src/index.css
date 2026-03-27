@@ -15,29 +15,38 @@
     margin: 0;
     min-height: 100vh;
     font-family: Inter, sans-serif;
+    line-height: 1.5;
     color: rgb(var(--color-text));
     background:
       radial-gradient(circle at top right, rgba(128, 28, 16, 0.23), transparent 40%),
       radial-gradient(circle at bottom left, rgba(80, 20, 15, 0.22), transparent 40%),
       rgb(var(--color-background));
   }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
 }
 
 @layer components {
   .btn-primary {
-    @apply inline-flex items-center justify-center rounded-md bg-gradient-to-r from-red-900 to-red-600 px-4 py-2 text-sm font-semibold text-white transition hover:brightness-110;
+    @apply inline-flex items-center justify-center rounded-md bg-gradient-to-r from-red-900 to-red-600 px-4 py-2 text-sm font-semibold text-white shadow-[0_8px_20px_rgba(185,28,28,0.35)] transition duration-200 hover:-translate-y-0.5 hover:brightness-110;
   }
 
   .btn-secondary {
-    @apply inline-flex items-center justify-center rounded-md border border-white/15 bg-white/5 px-4 py-2 text-sm font-medium text-zinc-200 transition hover:bg-white/10;
+    @apply inline-flex items-center justify-center rounded-md border border-white/15 bg-white/5 px-4 py-2 text-sm font-medium text-zinc-200 transition duration-200 hover:-translate-y-0.5 hover:bg-white/10;
   }
 
   .surface-card {
-    @apply rounded-2xl border border-white/10 bg-zinc-900/70 backdrop-blur-md;
+    @apply rounded-2xl border border-white/10 bg-zinc-900/70 shadow-[0_12px_30px_rgba(0,0,0,0.28)] backdrop-blur-md transition duration-300 hover:border-red-400/35;
   }
 
   .hero-card {
-    @apply rounded-3xl border border-red-500/20 bg-gradient-to-br from-black/70 via-zinc-900/90 to-red-950/30 shadow-[0_20px_70px_rgba(150,30,20,0.25)];
+    @apply rounded-3xl border border-red-500/20 bg-gradient-to-br from-black/80 via-zinc-900/90 to-red-950/30 shadow-[0_24px_80px_rgba(150,30,20,0.32)];
   }
 
   .section-title {
