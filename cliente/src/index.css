@@ -4,23 +4,26 @@
 
 @layer base {
   :root {
-    --color-primary: 120 18 10;
-    --color-secondary: 45 13 10;
-    --color-accent: 190 50 40;
-    --color-background: 10 10 10;
-    --color-text: 245 245 245;
+    --color-primary: 154 52 18;
+    --color-secondary: 22 18 16;
+    --color-accent: 232 93 4;
+    --color-background: 7 6 5;
+    --color-text: 245 240 235;
   }
 
   body {
     margin: 0;
     min-height: 100vh;
-    font-family: Inter, sans-serif;
+    font-family: Outfit, system-ui, sans-serif;
     line-height: 1.5;
     color: rgb(var(--color-text));
-    background:
-      radial-gradient(circle at top right, rgba(128, 28, 16, 0.23), transparent 40%),
-      radial-gradient(circle at bottom left, rgba(80, 20, 15, 0.22), transparent 40%),
-      rgb(var(--color-background));
+    background-color: #070605;
+    background-image:
+      radial-gradient(ellipse 80% 50% at 50% -10%, rgba(232, 93, 4, 0.16), transparent 55%),
+      radial-gradient(ellipse 50% 40% at 100% 20%, rgba(154, 52, 18, 0.12), transparent 50%),
+      radial-gradient(ellipse 40% 30% at 0% 80%, rgba(120, 40, 10, 0.1), transparent 45%),
+      linear-gradient(180deg, #0c0a09 0%, #070605 40%, #050403 100%);
+    background-attachment: fixed;
   }
 
   * {
@@ -30,38 +33,83 @@
   html {
     scroll-behavior: smooth;
   }
+
+  ::selection {
+    background: rgba(232, 93, 4, 0.35);
+    color: #fff;
+  }
+
+  img,
+  video {
+    max-width: 100%;
+  }
 }
 
 @layer components {
   .btn-primary {
-    @apply inline-flex items-center justify-center rounded-md bg-gradient-to-r from-red-900 to-red-600 px-4 py-2 text-sm font-semibold text-white shadow-[0_8px_20px_rgba(185,28,28,0.35)] transition duration-200 hover:-translate-y-0.5 hover:brightness-110;
+    @apply inline-flex items-center justify-center gap-2 rounded-full bg-ember px-6 py-3 text-sm font-semibold text-ink-950 transition duration-300 hover:-translate-y-0.5 hover:bg-ember-soft;
+    box-shadow: 0 0 40px rgba(232, 93, 4, 0.25);
+  }
+
+  .btn-primary:hover {
+    box-shadow: 0 0 50px rgba(244, 140, 6, 0.35);
   }
 
   .btn-secondary {
-    @apply inline-flex items-center justify-center rounded-md border border-white/15 bg-white/5 px-4 py-2 text-sm font-medium text-zinc-200 transition duration-200 hover:-translate-y-0.5 hover:bg-white/10;
+    @apply inline-flex items-center justify-center gap-2 rounded-full border border-white/15 bg-white/5 px-6 py-3 text-sm font-medium text-zinc-100 backdrop-blur-sm transition duration-300 hover:-translate-y-0.5 hover:border-ember/40 hover:bg-white/10;
   }
 
   .surface-card {
-    @apply rounded-2xl border border-white/10 bg-zinc-900/70 shadow-[0_12px_30px_rgba(0,0,0,0.28)] backdrop-blur-md transition duration-300 hover:border-red-400/35;
-  }
-
-  .hero-card {
-    @apply rounded-3xl border border-red-500/20 bg-gradient-to-br from-black/80 via-zinc-900/90 to-red-950/30 shadow-[0_24px_80px_rgba(150,30,20,0.32)];
+    @apply rounded-2xl border border-white/10 bg-ink-800/70 backdrop-blur-md transition duration-300 hover:border-ember/30 hover:bg-ink-700/80;
+    box-shadow: 0 30px 80px rgba(0, 0, 0, 0.55);
   }
 
   .section-title {
-    @apply text-3xl font-black tracking-tight md:text-5xl;
+    @apply font-display text-4xl text-zinc-50 md:text-6xl;
+    letter-spacing: 0.04em;
   }
 
   .section-copy {
-    @apply mt-3 max-w-3xl text-zinc-300;
+    @apply mt-3 max-w-2xl text-base font-light text-zinc-400 md:text-lg;
+  }
+
+  .section-kicker {
+    @apply text-xs font-semibold uppercase text-ember-soft;
+    letter-spacing: 0.35em;
   }
 
   .input-field {
-    @apply w-full rounded-md border border-white/10 bg-black/40 px-4 py-3 text-sm text-zinc-100 outline-none transition placeholder:text-zinc-500 focus:border-red-500/60 focus:ring-2 focus:ring-red-500/20;
+    @apply w-full rounded-xl border border-white/10 bg-black/40 px-4 py-3 text-sm text-zinc-100 outline-none transition placeholder:text-zinc-500 focus:border-ember/50 focus:ring-2 focus:ring-ember/20;
   }
 
   .chip {
-    @apply rounded-full border border-red-500/30 bg-red-900/20 px-3 py-1 text-xs text-red-200;
+    @apply rounded-full border border-ember/25 bg-ember/10 px-3 py-1 text-xs font-medium text-ember-soft;
+  }
+
+  .page-shell {
+    @apply mx-auto max-w-6xl px-4 py-10 sm:px-5 sm:py-14 lg:py-16;
+  }
+
+  .page-shell-wide {
+    @apply mx-auto max-w-7xl px-4 py-10 sm:px-5 sm:py-14 lg:py-16;
+  }
+
+  .filter-pill {
+    @apply rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm text-zinc-300 transition hover:border-ember/40 hover:text-white;
+  }
+
+  .filter-pill-active {
+    @apply border-ember/50 bg-ember/15 text-ember-soft;
+  }
+
+  .media-cover {
+    @apply aspect-square w-full overflow-hidden rounded-xl bg-ink-800 object-cover;
+    box-shadow: 0 30px 80px rgba(0, 0, 0, 0.55);
+  }
+}
+
+@layer utilities {
+  .mask-fade-b {
+    mask-image: linear-gradient(to bottom, black 55%, transparent 100%);
   }
 }
