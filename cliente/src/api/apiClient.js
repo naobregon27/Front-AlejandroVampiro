@@ -1,7 +1,16 @@
 import axios from 'axios';
 import { tokenStore } from './tokenStore';
 
-const BASE_URL = import.meta.env.VITE_API_URL ?? 'https://backend-acv2.onrender.com';
+/**
+ * Base del API.
+ * - Vacío / no definido → same-origin `/api/v1` (proxy Netlify o Vite). Evita CORS en producción.
+ * - URL absoluta → llamada directa al backend (requiere CORS_ORIGINS correcto).
+ */
+const configured = import.meta.env.VITE_API_URL;
+const BASE_URL =
+  configured === undefined || configured === null || String(configured).trim() === ''
+    ? ''
+    : String(configured).replace(/\/$/, '');
 
 export const apiClient = axios.create({
   baseURL: `${BASE_URL}/api/v1`,
@@ -9,8 +18,30 @@ export const apiClient = axios.create({
   timeout: 20000,
 });
 
-// ─── Request interceptor: adjunta el Bearer token si existe ────────────────
+function isPublicApiUrl(url = '') {
+  return String(url).includes('/public/');
+}
+
+/** Lecturas públicas no llevan Bearer. Excepción: POST .../vote (requiere login). */
+function shouldOmitAuth(config) {
+  const url = String(config?.url ?? '');
+  if (!isPublicApiUrl(url)) return false;
+  if (url.includes('/vote')) return false;
+  return true;
+}
+
+// ─── Request interceptor: Bearer solo donde hace falta ────────────────────
 apiClient.interceptors.request.use((config) => {
+  // Un JWT vencido en lecturas /public/* puede provocar 401 + refresh fallido
+  // y tumbar galería/música aunque el backend responda bien sin token.
+  if (shouldOmitAuth(config)) {
+    if (config.headers) {
+      delete config.headers.Authorization;
+      delete config.headers.authorization;
+    }
+    return config;
+  }
+
   const token = tokenStore.getAccessToken();
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
@@ -37,6 +68,10 @@ apiClient.interceptors.response.use(
     const originalRequest = error.config;
     const status = error.response?.status;
     const isRefreshRoute = originalRequest?.url?.includes('/auth/refresh');
+    // No intentar refresh en lecturas públicas (no llevan sesión).
+    if (status === 401 && shouldOmitAuth(originalRequest)) {
+      return Promise.reject(error);
+    }
 
     if (status === 401 && !originalRequest._retry && !isRefreshRoute) {
       if (isRefreshing) {

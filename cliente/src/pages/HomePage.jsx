@@ -32,8 +32,16 @@ function HomePage() {
   const { data: siteConfig, error: siteConfigError } = useSiteConfig();
   const { playTrack, isCurrent, isPlaying, toggle } = usePlayer();
 
-  const { data: musicData, loading: musicLoading } = useQuery(musicService.getMusicTracks);
-  const { data: galleryData, loading: galleryLoading } = useQuery(galleryService.getGallery);
+  const {
+    data: musicData,
+    loading: musicLoading,
+    error: musicError,
+  } = useQuery(musicService.getMusicTracks);
+  const {
+    data: galleryData,
+    loading: galleryLoading,
+    error: galleryError,
+  } = useQuery(galleryService.getGallery);
   const { data: eventsData } = useQuery(communityService.getCommunityEvents);
 
   const tracks = useMemo(() => sortByOrder(musicData?.items ?? []), [musicData?.items]);
@@ -284,7 +292,10 @@ function HomePage() {
               })}
         </div>
 
-        {!musicLoading && tracks.length === 0 ? (
+        {!musicLoading && musicError ? (
+          <p className="mt-8 text-sm text-red-300">No se pudo cargar la discografía. Intentá más tarde.</p>
+        ) : null}
+        {!musicLoading && !musicError && tracks.length === 0 ? (
           <p className="mt-8 text-sm text-zinc-500">Pronto llegan los primeros lanzamientos.</p>
         ) : null}
       </section>
@@ -343,7 +354,10 @@ function HomePage() {
               })}
         </div>
 
-        {!galleryLoading && gallery.length === 0 ? (
+        {!galleryLoading && galleryError ? (
+          <p className="mt-8 text-sm text-red-300">No se pudo cargar la galería. Intentá más tarde.</p>
+        ) : null}
+        {!galleryLoading && !galleryError && gallery.length === 0 ? (
           <p className="mt-8 text-sm text-zinc-500">La galería se llena desde el panel admin.</p>
         ) : null}
       </section>

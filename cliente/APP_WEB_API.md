@@ -59,14 +59,19 @@ El admin gestiona `hasPremiumAccess` desde el panel. El usuario **no ve** `isBlo
 ## 3. Configuración frontend
 
 ```env
-VITE_API_URL=http://localhost:4000   # o NEXT_PUBLIC_API_URL
+# Vacío = same-origin /api/v1 (proxy Vite en local, proxy Netlify en prod)
+VITE_API_URL=
+# Opcional: URL absoluta al backend (requiere CORS_ORIGINS correcto)
+# VITE_API_URL=https://backend-acv2.onrender.com
 ```
 
-Todas las peticiones van a `{VITE_API_URL}/api/v1/...`.
+Todas las peticiones van a `{VITE_API_URL}/api/v1/...`. Si `VITE_API_URL` está vacío, la base es `/api/v1` en el mismo origen.
 
 ### CORS
 
 El backend permite orígenes definidos en `CORS_ORIGINS`. En desarrollo suele ser `http://localhost:5173`.
+
+**Producción (Netlify):** el sitio usa proxy same-origin (`/api/*` → backend) para no depender de CORS. En Render, `CORS_ORIGINS` debe incluir `https://acv2-music.netlify.app` (y el origen del panel admin) si alguna app llama al API en forma directa.
 
 ### Cabeceras en rutas protegidas
 

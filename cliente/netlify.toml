@@ -4,6 +4,15 @@
 
 [build.environment]
   NODE_VERSION = "20"
+  # Same-origin /api proxy (evita CORS). No apuntar VITE_API_URL al backend remoto en Netlify.
+  VITE_API_URL = ""
+
+# Proxy API → backend (debe ir antes del SPA fallback)
+[[redirects]]
+  from = "/api/*"
+  to = "https://backend-acv2.onrender.com/api/:splat"
+  status = 200
+  force = true
 
 [[redirects]]
   from = "/*"
